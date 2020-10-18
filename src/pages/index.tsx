@@ -12,7 +12,7 @@ const IndexPage: NextPage = () => (
 );
 
 export async function getStaticProps() {
-  const apolloClient = initializeApollo();
+  const apolloClient = initializeApollo(null);
 
   await apolloClient.query({
     query: ALL_BOOKS_QUERY,

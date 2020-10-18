@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently --prefix-colors=green,magenta \"npm:generate-types-watch\" \"npm:start-dev\"",
-    "build": "next build",
+    "build": "npm run generate-types && next build",
     "start": "next start",
     "start-dev": "next dev",
     "generate-types": "graphql-codegen --config codegen.yml",
