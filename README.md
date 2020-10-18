@@ -42,6 +42,8 @@ npm run dev
 yarn dev
 ```
 
+This will start next.js in dev mode and regenerate TypeScript types on file change.
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 Happy tinkering!
