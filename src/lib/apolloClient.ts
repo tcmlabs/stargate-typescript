@@ -11,7 +11,7 @@ function createApolloClient() {
       uri: "http://localhost:8080/graphql/library", // Server URL (must be absolute)
       credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
       headers: {
-        "x-cassandra-token": "78f3f2ba-7129-4c19-8c60-7518f7bdfa76",
+        "x-cassandra-token": process.env.NEXT_PUBLIC_X_CASSANDRA_TOKEN,
       },
     }),
     cache: new InMemoryCache({
