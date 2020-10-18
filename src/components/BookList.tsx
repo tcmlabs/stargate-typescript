@@ -1,6 +1,6 @@
 import { gql, NetworkStatus } from "@apollo/client";
 import { useAllBooksQuery } from "../generated/graphql";
-import ErrorMessage from "./ErrorMessage";
+import { ErrorMessage } from "./ErrorMessage";
 
 export const ALL_BOOKS_QUERY = gql`
   query allBooks {
@@ -13,7 +13,7 @@ export const ALL_BOOKS_QUERY = gql`
   }
 `;
 
-export default function BookList() {
+export const BookList: React.FC = () => {
   const { loading, error, data, networkStatus } = useAllBooksQuery({
     variables: {},
     notifyOnNetworkStatusChange: true,
@@ -28,16 +28,20 @@ export default function BookList() {
     return <div>Loading</div>;
   }
 
-  const { values: allBooks } = data.books;
+  const books = data ? data.books?.values || [] : [];
 
   return (
     <section>
       <ul>
-        {allBooks.map((book, index) => (
+        {books.map((book, index) => (
           <li key={`${book.author}-${book.title}-${index}`}>
             <div>
               <span>{index + 1}. </span>
-              <a href={book.title}>{book.title}</a>
+              {book.title ? (
+                <a href={book.title}>{book.title}</a>
+              ) : (
+                <span>{book.title}</span>
+              )}
             </div>
           </li>
         ))}
@@ -83,4 +87,4 @@ export default function BookList() {
       `}</style>
     </section>
   );
-}
+};

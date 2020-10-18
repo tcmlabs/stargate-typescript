@@ -1,5 +1,7 @@
 import { gql } from "@apollo/client";
-import { useInsertBookMutation } from "../generated/graphql";
+
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { Books, Maybe, useInsertBookMutation } from "../generated/graphql";
 
 const CREATE_BOOK_MUTATION = gql`
   mutation insertBook($title: String!, $author: String!) {
@@ -12,16 +14,33 @@ const CREATE_BOOK_MUTATION = gql`
   }
 `;
 
+type Mandatory<T> = {
+  [Key in keyof T]: T[Key] extends Maybe<infer U> ? U : Key;
+};
+
+const makeBookFormBaseState = (): Mandatory<Books> => ({
+  title: "",
+  author: "",
+});
+
 export default function Submit() {
   const [insertBook, { loading }] = useInsertBookMutation();
 
-  const handleSubmit = (event) => {
+  const [formState, setFormState] = useState<Mandatory<Books>>(
+    makeBookFormBaseState()
+  );
+
+  const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
-    const form = event.target;
-    const formData = new window.FormData(form);
-    const title = formData.get("title").toString();
-    const author = formData.get("author").toString();
-    form.reset();
+
+    const { title, author } = formState;
+
+    if (!title || !author) {
+      // TODO: handle invalid form
+      return;
+    }
+
+    setFormState(makeBookFormBaseState());
 
     insertBook({
       variables: { title, author },
@@ -29,11 +48,34 @@ export default function Submit() {
     });
   };
 
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    event.persist(); // https://reactjs.org/docs/events.html#event-pooling
+
+    setFormState((state) => ({
+      ...state,
+      [event.target.name]: event.target.value,
+    }));
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <h1>Submit</h1>
-      <input placeholder="title" name="title" type="text" required />
-      <input placeholder="author" name="author" type="author" required />
+      <input
+        placeholder="title"
+        name="title"
+        type="text"
+        required
+        value={formState.title}
+        onChange={handleChange}
+      />
+      <input
+        placeholder="author"
+        name="author"
+        type="author"
+        required
+        value={formState.author}
+        onChange={handleChange}
+      />
       <button type="submit" disabled={loading}>
         Submit
       </button>

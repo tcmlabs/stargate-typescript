@@ -8,6 +8,11 @@ generates:
       - "typescript-operations"
       - "typescript-react-apollo"
       - "fragment-matcher"
+    config:
+      avoidOptionals:
+        field: true
+        inputValue: true
+        object: true
   ./graphql.schema.json:
     plugins:
       - "introspection"

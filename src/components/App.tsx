@@ -1,4 +1,4 @@
-export default function App({ children }) {
+export const App: React.FC = ({ children }) => {
   return (
     <main>
       {children}
@@ -44,4 +44,4 @@ export default function App({ children }) {
       `}</style>
     </main>
   );
-}
+};

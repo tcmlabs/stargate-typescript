@@ -1,9 +1,10 @@
-import App from "../components/App";
+import { App } from "../components/App";
 import Submit from "../components/Submit";
-import BookList, { ALL_BOOKS_QUERY } from "../components/BookList";
+import { BookList, ALL_BOOKS_QUERY } from "../components/BookList";
 import { initializeApollo } from "../lib/apolloClient";
+import { NextPage } from "next";
 
-const IndexPage = () => (
+const IndexPage: NextPage = () => (
   <App>
     <Submit />
     <BookList />

@@ -1,7 +1,8 @@
 import { ApolloProvider } from "@apollo/client";
+import { AppComponent } from "next/dist/next-server/lib/router/router";
 import { useApollo } from "../lib/apolloClient";
 
-export default function App({ Component, pageProps }) {
+const App: AppComponent = ({ Component, pageProps }) => {
   const apolloClient = useApollo(pageProps.initialApolloState);
 
   return (
@@ -9,4 +10,6 @@ export default function App({ Component, pageProps }) {
       <Component {...pageProps} />
     </ApolloProvider>
   );
-}
+};
+
+export default App;
