@@ -1,9 +1,6 @@
 import App from "../components/App";
 import Submit from "../components/Submit";
-import BookList, {
-  ALL_BOOKS_QUERY,
-  allBooksQueryVars,
-} from "../components/BookList";
+import BookList, { ALL_BOOKS_QUERY } from "../components/BookList";
 import { initializeApollo } from "../lib/apolloClient";
 
 const IndexPage = () => (
@@ -18,7 +15,6 @@ export async function getStaticProps() {
 
   await apolloClient.query({
     query: ALL_BOOKS_QUERY,
-    variables: allBooksQueryVars,
   });
 
   return {

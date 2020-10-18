@@ -1,4 +1,5 @@
-import { gql, useQuery, NetworkStatus } from "@apollo/client";
+import { gql, NetworkStatus } from "@apollo/client";
+import { useAllBooksQuery } from "../generated/graphql";
 import ErrorMessage from "./ErrorMessage";
 
 export const ALL_BOOKS_QUERY = gql`
@@ -12,17 +13,9 @@ export const ALL_BOOKS_QUERY = gql`
   }
 `;
 
-export const allBooksQueryVars = {
-  skip: 0,
-  first: 10,
-};
-
 export default function BookList() {
-  const { loading, error, data, networkStatus } = useQuery(ALL_BOOKS_QUERY, {
-    variables: allBooksQueryVars,
-    // Setting this value to true will make the component rerender when
-    // the "networkStatus" changes, so we are able to know if it is fetching
-    // more data
+  const { loading, error, data, networkStatus } = useAllBooksQuery({
+    variables: {},
     notifyOnNetworkStatusChange: true,
   });
 
@@ -41,10 +34,10 @@ export default function BookList() {
     <section>
       <ul>
         {allBooks.map((book, index) => (
-          <li key={book.id}>
+          <li key={`${book.author}-${book.title}-${index}`}>
             <div>
               <span>{index + 1}. </span>
-              <a href={book.url}>{book.title}</a>
+              <a href={book.title}>{book.title}</a>
             </div>
           </li>
         ))}

@@ -34,6 +34,8 @@ This token will then be used by the Apollo Client http-link when querying Starga
 
 ### Run the development server
 
+We use [GraphQL Code Generator](https://graphql-code-generator.com/) and follow the approach detailed here: https://formidable.com/blog/2019/strong-typing/
+
 ```bash
 npm run dev
 # or

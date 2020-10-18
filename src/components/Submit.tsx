@@ -1,4 +1,5 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useInsertBookMutation } from "../generated/graphql";
 
 const CREATE_BOOK_MUTATION = gql`
   mutation insertBook($title: String!, $author: String!) {
@@ -12,14 +13,14 @@ const CREATE_BOOK_MUTATION = gql`
 `;
 
 export default function Submit() {
-  const [insertBook, { loading }] = useMutation(CREATE_BOOK_MUTATION);
+  const [insertBook, { loading }] = useInsertBookMutation();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
     const formData = new window.FormData(form);
-    const title = formData.get("title");
-    const author = formData.get("author");
+    const title = formData.get("title").toString();
+    const author = formData.get("author").toString();
     form.reset();
 
     insertBook({
