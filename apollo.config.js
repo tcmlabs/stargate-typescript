@@ -4,5 +4,6 @@ module.exports = {
       name: "stargate-library",
       url: "http://localhost:8080/graphql/library",
     },
+    excludes: ["src/generated/**/*"],
   },
 };
